@@ -14,7 +14,7 @@ It connects **Docling** (document parsing) → **ChromaDB** (vector store) → *
 - 📑 Chunk text intelligently for retrieval.
 - 🧠 Store embeddings in [ChromaDB](https://www.trychroma.com/).
 - 🤖 Answer questions using [Ollama](https://ollama.ai/) (default: `llama3.2:1b`).
-- 🛡️ Designed for **local execution** (no cloud lock-in).
+- 🛡️ Designed for **local execution**
 - 🖥️ Works both as a **CLI tool** and a **Python library**.
 
 ---
@@ -64,7 +64,7 @@ python -m docrag.cli ask "Give a concise bullet summary of the paper's main cont
 ### Export parsed text
 
 ```bash
-python -m docrag.cli export https://arxiv.org/pdf/2408.09869   --out-dir ./exports
+python -m docrag.cli export https://arxiv.org/pdf/2508.20755   --out-dir ./exports
 ```
 
 Saves parsed text (Markdown/JSON).
@@ -98,7 +98,7 @@ cfg = DocragSettings(
 pipeline = RAGPipeline(cfg)
 
 # Ingest a document
-n_chunks = pipeline.ingest("https://arxiv.org/pdf/2408.09869")
+n_chunks = pipeline.ingest("https://arxiv.org/pdf/2508.20755")
 print(f"Ingested {n_chunks} chunks")
 
 # Ask a question
