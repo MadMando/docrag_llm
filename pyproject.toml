@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "docrag-llm"
+version = "0.1.17"
+description = "Docling → Chroma → Ollama: simple, RAG pipeline"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+license-files = ["LICEN[CS]E*"]
+authors = [{ name = "Armando Medina", email = "one1cat@gmail.com" }]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Typing :: Typed",
+  "Operating System :: OS Independent",
+]
+
+dependencies = [
+  "docling>=2.48.0",
+  "chromadb>=0.5.0",
+  "ollama>=0.3.0",
+  "pydantic>=2.7",
+  "typer>=0.12.0",
+  "watchdog>=4.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0","ruff>=0.5.0","mypy>=1.10.0","build>=1.2.1","twine>=5.0.0"]
+
+[project.scripts]
+docrag = "docrag.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/docrag"]     # list of strings; MUST have __init__.py inside
+
+[tool.hatch.build.targets.sdist]
+include = ["src/**", "README.md", "pyproject.toml", "LICEN[CS]E*"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100

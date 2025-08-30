@@ -1,0 +1,10 @@
+from docrag import DocragSettings, RAGPipeline
+
+cfg = DocragSettings(persist_path="./.chroma", collection="demo")
+pipe = RAGPipeline(cfg)
+
+# Ingest a document
+pipe.ingest("https://arxiv.org/pdf/2508.20755")
+
+# Ask a question
+print(pipe.ask("What are the main contributions of this paper?"))
