@@ -1,5 +1,9 @@
 # 📄 DocRAG LLM
 
+check out my python library at pypi  https://pypi.org/project/docrag-llm/#description
+
+pip install docrag-llm
+
 **DocRAG LLM** is a simple, Retrieval-Augmented Generation (RAG) pipeline.  
 It connects **Docling** (document parsing) → **ChromaDB** (vector store) → **Ollama** (local LLMs) into a single workflow, with both a CLI and a Python API.
 
