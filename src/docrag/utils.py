@@ -33,7 +33,7 @@ def expand_sources(source: str) -> List[str]:
     return [src]
 # update check
 
-def chunk_text(text: str, target_chars: int = 1000, overlap: int = 200) -> List[str]:
+def chunk_text(text: str, target_chars: int = 500, overlap: int = 100) -> List[str]:
     sentences = re.split(r'(?<=[\.\?\!])\s+', text.strip())
     chunks, buf, size = [], [], 0
     for s in sentences:

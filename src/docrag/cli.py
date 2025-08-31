@@ -42,8 +42,8 @@ def ingest(
     embed_model: str = typer.Option(
         "nomic-embed-text", "--embed", help="Embedding model (Ollama tag)", show_default=True
     ),
-    chunk_chars: int = typer.Option(1000, help="Approx characters per chunk", show_default=True),
-    chunk_overlap: int = typer.Option(200, help="Chunk overlap", show_default=True),
+    chunk_chars: int = typer.Option(500, help="Approx characters per chunk", show_default=True),
+    chunk_overlap: int = typer.Option(100, help="Chunk overlap", show_default=True),
     fail_on_empty: bool = typer.Option(True, help="Abort if extracted text is empty", show_default=True),
 ) -> None:
     cfg = DocragSettings(

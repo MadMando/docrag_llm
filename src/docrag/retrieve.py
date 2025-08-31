@@ -9,7 +9,7 @@ from .convert import DoclingConverter
 from .index import ChromaIndexer
 
 
-def _chunk_text(text: str, target_chars: int = 1000, overlap: int = 200) -> List[str]:
+def _chunk_text(text: str, target_chars: int = 500, overlap: int = 100) -> List[str]:
     """
     Sentence-aware chunking with overlap. Falls back to fixed-size chunks if needed.
     """

@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "docrag-llm"
-version = "0.1.22"
-description = "Docling → Chroma → Ollama: simple sRAG pipeline"
+version = "0.1.23"
+description = "Docling → Chroma → Ollama: Simple RAG pipeline"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 license-files = ["LICEN[CS]E*"]
-authors = [{ name = "Armando Medina", email = "one1cat@gmail.com" }]
+authors = [{ name = "Armando Medina", email = "MedinaArmando0912@gmail.com" }]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
