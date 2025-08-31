@@ -13,7 +13,7 @@ It connects **Docling** (document parsing) → **ChromaDB** (vector store) → *
 - 🔍 Parse documents with [Docling](https://github.com/docling-project/docling) (PDF, DOCX, PPTX, HTML, etc.).
 - 📑 Chunk text intelligently for retrieval.
 - 🧠 Store embeddings in [ChromaDB](https://www.trychroma.com/).
-- 🤖 Answer questions using [Ollama](https://ollama.com/) (default: `llama3.2:1b`).
+- 🤖 Answer questions using [Ollama](https://ollama.ai/) (default: `llama3.2:1b`).
 - 🛡️ Designed for **local execution** (no cloud lock-in).
 - 🖥️ Works both as a **CLI tool** and a **Python library**.
 
