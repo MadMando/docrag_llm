@@ -31,7 +31,7 @@ def expand_sources(source: str) -> List[str]:
 
     # Fallback: return as-is (Docling can try to open; user gets a sensible error)
     return [src]
-
+# update check
 
 def chunk_text(text: str, target_chars: int = 1000, overlap: int = 200) -> List[str]:
     sentences = re.split(r'(?<=[\.\?\!])\s+', text.strip())
