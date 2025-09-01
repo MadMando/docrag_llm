@@ -1,7 +1,7 @@
 # src/docrag/index.py
 from __future__ import annotations
 
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 import uuid
 import chromadb
 from chromadb import PersistentClient

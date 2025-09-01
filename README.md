@@ -1,97 +1,62 @@
-# 📄 DocRAG LLM
+# 📄 DocRAG LLM  
+**Docling → Chroma → Ollama: Simple Local RAG Pipeline**  
 
-check out my python library at pypi  https://pypi.org/project/docrag-llm/#description
+[![PyPI](https://img.shields.io/pypi/v/docrag-llm)](https://pypi.org/project/docrag-llm/)  
+[![Python](https://img.shields.io/pypi/pyversions/docrag-llm)](https://pypi.org/project/docrag-llm/)  
+[![License](https://img.shields.io/pypi/l/docrag-llm)](https://github.com/one1cat/docrag-llm/blob/main/LICENSE)  
 
-pip install docrag-llm
 
-**DocRAG LLM** is a simple, Retrieval-Augmented Generation (RAG) pipeline.  
-It connects **Docling** (document parsing) → **ChromaDB** (vector store) → **Ollama** (local LLMs) into a single workflow, with both a CLI and a Python API.
+---
+
+### 🔎 What is DocRAG LLM?  
+**DocRAG LLM** is a local-first **Retrieval-Augmented Generation (RAG)** pipeline.  
+It connects **[Docling](https://github.com/DS4SD/docling)** for parsing → **[ChromaDB](https://www.trychroma.com/)** for vector storage → **[Ollama](https://ollama.com/)** for local LLM inference.  
+
+No cloud lock-in. No API costs. Just **local docs → local vectors → local LLMs**.  
 
 ---
 
 ## ✨ Features
-- 🔍 Parse documents with [Docling](https://github.com/docling-project/docling) (PDF, DOCX, PPTX, HTML, etc.).
-- 📑 Chunk text intelligently for retrieval.
-- 🧠 Store embeddings in [ChromaDB](https://www.trychroma.com/).
-- 🤖 Answer questions using [Ollama](https://ollama.ai/) (default: `llama3.2:1b`).
-- 🛡️ Designed for **local execution** (no cloud lock-in).
-- 🖥️ Works both as a **CLI tool** and a **Python library**.
+- 🔍 Parse documents with **Docling** (`PDF`, `DOCX`, `PPTX`, `HTML`, etc.)  
+- 📑 **Intelligent chunking** for retrieval  
+- 🧠 Store embeddings in **ChromaDB**  
+- 🤖 Answer questions using **Ollama** (default: `llama3.2:1b`)  
+- 🛡️ **Privacy-first** → all local execution  
+- 🖥️ Use as a **CLI tool** or **Python library**  
 
 ---
 
 ## 📦 Installation
-
 ```bash
 pip install docrag-llm
 ```
 
-### Requirements
-- Python 3.10+
-- [Ollama](https://ollama.com) installed and running
-- Models pulled locally:
+Requirements:
+- Python 3.10+  
+- [Ollama](https://ollama.com/) installed & running  
+- Local models:  
   ```bash
-  ollama pull llama3.2:1b --or any other model you prefer from Ollama
+  ollama pull llama3.2:1b
   ollama pull nomic-embed-text
   ```
 
 ---
 
-## 🚀 Quickstart (CLI)
+## 🚀 Quickstart
 
-### Ingest a document into Chroma
---uses all defaults
+### CLI – Ingest and Ask
 ```bash
-python -m docrag.cli ingest https://arxiv.org/pdf/2508.20755 
+# Ingest a document (default collection: demo)
+python -m docrag.cli ingest https://arxiv.org/pdf/2508.20755
+
+# Ask a question (default LLM: llama3.2:1b)
+python -m docrag.cli ask "Summarize in 1 paragraph with 5 bullet points"
 ```
 
-- `--persist` → directory for Chroma DB (default: `./.chroma`)  Default no need to change
-- `--embed` → embedding model (default: `nomic-embed-text`)   Default embed model
-- `--collection` → logical collection name (default: `demo`)  
-- to specify new collection add the following `--collection` and name of your collection if not goes to default 
----
-
-### Ask a question (default LLM = `llama3.2:1b`) you can choose depending on what you download as models
-Llama3.2:1b was chosen because of it's small size
-
-```bash
-python -m docrag.cli ask "Summerize in one paragraph and give me 5 bullets points of the main ideas"   
-```
-
-- `--llm` → LLM model to use (default: `llama3.2:1b`)  
-- `--top-k` → number of chunks retrieved (default: 5)  
-- `--persist` → directory for Chroma DB (default: `./.chroma`)  
-- `--collection` → logical collection name (default: `demo`)  
-- `--embed` → embedding model (default: `nomic-embed-text`)  
-
----
-
-### Export parsed text
-
-```bash
-python -m docrag.cli export https://arxiv.org/pdf/2508.20755   --out-dir ./exports
-```
-
-Saves parsed text (Markdown/JSON).
-
----
-
-### CLI Help
-
-```bash
-python -m docrag.cli --help
-python -m docrag.cli ingest --help
-python -m docrag.cli ask --help
-python -m docrag.cli export --help
-```
-
----
-
-## 🐍 Usage as a Python Library
-
+### Python API
 ```python
 from docrag import DocragSettings, RAGPipeline
 
-# Configure pipeline
 cfg = DocragSettings(
     persist_path="./.chroma",
     collection="demo",
@@ -101,23 +66,21 @@ cfg = DocragSettings(
 
 pipeline = RAGPipeline(cfg)
 
-# Ingest a document
+# Ingest
 n_chunks = pipeline.ingest("https://arxiv.org/pdf/2508.20755")
 print(f"Ingested {n_chunks} chunks")
 
-# Ask a question
-answer = pipeline.ask("Give a concise bullet summary of the paper's main contributions.")
+# Ask
+answer = pipeline.ask("Give a concise bullet summary of the paper's contributions.")
 print(answer)
 ```
 
 ---
 
 ## ⚙️ Configuration
-
-Both the **Python API** and **CLI** allow controlling:
-
-- `persist_path` → path to Chroma DB  
-- `collection` → collection name  
+Both CLI & Python API let you customize:
+- `persist_path` → where ChromaDB stores vectors  
+- `collection` → logical collection name  
 - `embed_model` → embedding model (Ollama tag)  
 - `llm_model` → LLM model (default: `llama3.2:1b`)  
 - `chunk_chars` / `chunk_overlap` → chunking granularity  
@@ -125,18 +88,19 @@ Both the **Python API** and **CLI** allow controlling:
 ---
 
 ## 📊 Roadmap
-- [ ] Add `model-check` CLI command to list installed Ollama models.  
-- [ ] Support multiple backends (Weaviate, Milvus).  
-- [ ] Add streaming output for long answers.  
-- [ ] Expand test suite with large document regression cases.  
+- [ ] `model-check` CLI → list installed Ollama models  
+- [ ] Support multiple backends (Weaviate, Milvus)  
+- [ ] Streaming output for long answers  
+- [ ] Expanded test suite (large document regression cases)  
+- [ ] Example notebooks & Hugging Face demo  
 
 ---
 
 ## 🤝 Contributing
-
-PRs and issues welcome! Please run lint and tests before submitting:
+PRs and issues welcome!  
 
 ```bash
+pip install "docrag-llm[dev]"
 ruff check .
 pytest
 ```
@@ -144,5 +108,6 @@ pytest
 ---
 
 ## 📜 License
+MIT License © 2025 [Armando Medina](https://github.com/one1cat)
 
-MIT License © 2025
+---

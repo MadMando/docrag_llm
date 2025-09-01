@@ -1,0 +1,60 @@
+# Dockerfile (all-in-one: Ollama + models + docrag-llm API)
+# OS base
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    OLLAMA_HOST=0.0.0.0:11434 \
+    OLLAMA_MODELS=/opt/ollama/models \
+    DOCRAG_LLM=llama3.2:1b \
+    DOCRAG_EMBED=nomic-embed-text
+
+# System deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl ca-certificates build-essential procps tini \
+ && rm -rf /var/lib/apt/lists/*
+
+# Install Ollama
+# Official install script; installs /usr/local/bin/ollama
+RUN curl -fsSL https://ollama.com/install.sh | sh
+
+# Precreate models directory
+RUN mkdir -p ${OLLAMA_MODELS}
+
+# Install Python deps
+WORKDIR /app
+RUN pip install --upgrade pip \
+ && pip install "docrag-llm" "fastapi" "uvicorn[standard]" "chromadb"
+
+# Copy API server (expects 'server.py' like the earlier file)
+COPY server.py /app/server.py
+# Copy entrypoint
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
+# Pull models during build so image ships ready-to-go
+# Start ollama daemon temporarily to pull, then stop
+RUN bash -lc '\
+  (ollama serve & p=$!; \
+   for i in {1..60}; do \
+      curl -fsS http://127.0.0.1:11434/api/tags >/dev/null && break; \
+      sleep 1; \
+   done; \
+   echo "Pulling models..."; \
+   ollama pull llama3.2:1b; \
+   ollama pull nomic-embed-text; \
+   kill $p || true; \
+   sleep 2) \
+'
+
+# Ports: 11434 (Ollama), 8000 (FastAPI)
+EXPOSE 11434 8000
+
+# Healthcheck: verify both Ollama and API once running
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=5 \
+  CMD bash -lc 'curl -fsS http://127.0.0.1:11434/api/tags >/dev/null && curl -fsS http://127.0.0.1:8000/api/health >/dev/null || exit 1'
+
+# Use Tini as PID 1 for proper signal handling
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["/app/start.sh"]

@@ -1,6 +1,6 @@
 from __future__ import annotations
 from pathlib import Path
-from typing import Iterable, List
+from typing import List
 import re
 
 DOC_EXTS = {".pdf", ".docx", ".pptx", ".html", ".htm", ".txt", ".xlsx"}
