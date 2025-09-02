@@ -36,7 +36,7 @@ Requirements:
 - [Ollama](https://ollama.com/) installed & running  
 - Local models:  
   ```bash
-  ollama pull llama3.2:1b
+  ollama pull llama3.2:1b -- or any other model
   ollama pull nomic-embed-text
   ```
 
@@ -49,11 +49,12 @@ Requirements:
 # Ingest a document (default collection: demo)
 python -m docrag.cli ingest https://arxiv.org/pdf/2508.20755
 
-# Ask a question (default LLM: llama3.2:1b)
-python -m docrag.cli ask "Summarize in 1 paragraph with 5 bullet points"
+# Ask a question (default LLM: llama3.2:1b) you can always add the tag `-llm gpt-oss:20b` for better response assuming you have the computing power for it. 
+python -m docrag.cli ask "Summarize in 1 paragraph with 5 bullet points" 
+python -m docrag.cli ask "Summarize in 1 paragraph with 5 bullet points" -llm gpt-oss:20b
 ```
 
-### Python API
+### Python API - llama3.2:1b is just for testing, reccomend if you have the computing power to ues gpt-oss:20b you will get better results.  change as needed, pull from ollama first. 
 ```python
 from docrag import DocragSettings, RAGPipeline
 
