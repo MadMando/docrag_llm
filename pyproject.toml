@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "docrag-llm"
-version = "0.1.25"
+version = "0.1.26"
 description = "Docling → Chroma → Ollama: Simple RAG pipeline"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -44,9 +44,12 @@ dev = [
 docrag = "docrag.cli:main"
 
 [project.urls]
-GitHub = "https://github.com/MadMando/docrag_llm"
-Linkedin = "https://www.linkedin.com/in/medinaarmando0912"
+Homepage = "https://github.com/MadMando/docrag_llm"
+Repository = "https://github.com/MadMando/docrag_llm"
+Issues = "https://github.com/MadMando/docrag_llm/issues"
 HuggingFace = "https://huggingface.co/MedinaArmando"
+LinkedIn = "https://www.linkedin.com/in/medinaarmando0912"
+
 
 
 [tool.hatch.build.targets.wheel]
