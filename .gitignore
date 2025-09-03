@@ -13,8 +13,11 @@ build/
 .coverage
 .pytest_cache/
 .mypy_cache/
-.pytype/
+.pytpe/
 .cache/
+
+# Project-specific ignores
+.chroma/
 Dockerfile.allinone
 server.py
 start.sh

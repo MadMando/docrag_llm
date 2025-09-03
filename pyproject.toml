@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "docrag-llm"
-version = "0.1.26"
+version = "0.1.27"
 description = "Docling → Chroma → Ollama: Simple RAG pipeline"
 readme = "README.md"
 requires-python = ">=3.10"
