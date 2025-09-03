@@ -17,7 +17,7 @@ build/
 .cache/
 
 # Project-specific ignores
-.chroma/
-Dockerfile.allinone
-server.py
-start.sh
+/.chroma/
+/Dockerfile.allinone
+/server.py
+/start.sh
